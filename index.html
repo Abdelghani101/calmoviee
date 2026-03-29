@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CaLMoviE — Outdoor Cinema</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg-scene">
+  <div class="moon"></div>
+  <div id="mountains-mount"></div>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+  <header class="site-header">
+    <div class="header-crown">
+      <span class="crown-star">✦</span>
+      <h1 class="site-name" id="site-name">CaLMoviE</h1>
+      <span class="crown-star">✦</span>
+    </div>
+    <p class="site-tagline" id="site-tagline">Outdoor Cinema Experience</p>
+    <div class="header-rule"></div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- DAY SELECTOR -->
+    <section class="section reveal">
+      <div class="sec-head">
+        <h2 class="sec-title">🗓️ Choose Your Night</h2>
+        <span class="sec-sub">Two screenings — pick your evening</span>
+      </div>
+      <div class="day-selector">
+        <div class="day-card active" id="day-card-0" onclick="selectDay(0)">
+          <span class="day-badge">🔴 Live</span>
+          <div class="day-name" id="day-name-0">Monday</div>
+          <div class="day-date-lbl" id="day-date-0">April 7 · 2026</div>
+          <div class="day-movie-title" id="day-movie-0">Interstellar</div>
+          <div class="day-selected-indicator"></div>
+        </div>
+        <div class="day-card" id="day-card-1" onclick="selectDay(1)">
+          <span class="day-badge" style="background:var(--navy-lt)">📅</span>
+          <div class="day-name" id="day-name-1">Tuesday</div>
+          <div class="day-date-lbl" id="day-date-1">April 8 · 2026</div>
+          <div class="day-movie-title" id="day-movie-1">Dune: Part Two</div>
+          <div class="day-selected-indicator"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-ornament reveal"><span></span><i>✦</i><span></span></div>
+
+    <!-- MOVIE CARD -->
+    <section class="section reveal">
+      <div class="sec-head">
+        <h2 class="sec-title">🎬 Tonight's Screening</h2>
+        <span class="sec-sub" id="screening-day-label">Monday · April 7</span>
+      </div>
+      <div class="movie-card">
+        <div class="poster-shell">
+          <span class="poster-badge" id="movie-badge">🔴 Monday</span>
+          <img class="movie-poster" id="movie-poster"
+            src="https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg"
+            alt="Movie Poster"
+            onerror="this.src='https://placehold.co/160x240/1a2560/d4af37?text=🎬'">
+        </div>
+        <div class="movie-info">
+          <span class="now-label">Now Showing</span>
+          <h2 class="movie-title" id="movie-name-display">Interstellar</h2>
+          <ul class="meta-list">
+            <li class="meta-item"><div class="meta-dot">📅</div><div class="meta-text"><span class="lbl">Date</span><span class="val" id="meta-date">Monday, April 7 · 2026</span></div></li>
+            <li class="meta-item"><div class="meta-dot">⏰</div><div class="meta-text"><span class="lbl">Showtime</span><span class="val" id="meta-time">21:00</span></div></li>
+            <li class="meta-item"><div class="meta-dot">📍</div><div class="meta-text"><span class="lbl">Venue</span><span class="val" id="meta-venue">Open Sky · Outdoor Stage</span></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-ornament reveal"><span></span><i>✦</i><span></span></div>
+
+    <!-- SNACKS -->
+    <section class="section reveal">
+      <div class="sec-head">
+        <h2 class="sec-title">🍿 Snack Menu</h2>
+        <span class="sec-sub">Available at the counter</span>
+      </div>
+      <div class="snack-grid" id="snack-grid"></div>
+    </section>
+
+    <div class="divider-ornament reveal"><span></span><i>✦</i><span></span></div>
+
+    <!-- SEAT TYPES -->
+    <section class="section reveal">
+      <div class="sec-head">
+        <h2 class="sec-title">🎟️ Choose Your Seat</h2>
+        <span class="sec-sub">Click to select your comfort level</span>
+      </div>
+      <div class="price-grid">
+        <div class="price-card" id="card-Pouf" onclick="selectSeatType('Pouf')">
+          <span class="selected-check">✦</span>
+          <svg class="seat-svg" viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="34" cy="30" rx="26" ry="20" fill="#6b3a1f" opacity=".9"/>
+            <ellipse cx="34" cy="30" rx="22" ry="16" fill="#8b5a2b"/>
+            <ellipse cx="28" cy="22" rx="9" ry="6" fill="rgba(255,255,255,.12)" transform="rotate(-15 28 22)"/>
+            <path d="M12,30 Q34,18 56,30" stroke="rgba(0,0,0,.25)" stroke-width="1.5" fill="none"/>
+            <path d="M14,36 Q34,24 54,36" stroke="rgba(0,0,0,.2)" stroke-width="1" fill="none"/>
+            <ellipse cx="34" cy="47" rx="20" ry="6" fill="#4a2510" opacity=".85"/>
+            <ellipse cx="34" cy="46" rx="18" ry="4.5" fill="#5c3018"/>
+            <ellipse cx="34" cy="30" rx="26" ry="20" fill="none" stroke="rgba(212,175,55,.3)" stroke-width="1.2"/>
+            <circle cx="34" cy="56" r="2.5" fill="#d4af37" opacity=".5"/>
+          </svg>
+          <div class="price-type">Pouf</div>
+          <div class="price-amt" id="display-price-Pouf">1500<sup>DA</sup></div>
+          <div class="price-desc">Cozy bean bag on the grass</div>
+        </div>
+        <div class="price-card" id="card-Standard" onclick="selectSeatType('Standard')">
+          <span class="selected-check">✦</span>
+          <svg class="seat-svg" viewBox="0 0 68 68" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="50" width="52" height="6" rx="2" fill="#7a5c30"/>
+            <rect x="12" y="52" width="8" height="10" rx="1" fill="#5c4020"/>
+            <rect x="30" y="52" width="8" height="10" rx="1" fill="#5c4020"/>
+            <rect x="48" y="52" width="8" height="10" rx="1" fill="#5c4020"/>
+            <rect x="10" y="36" width="48" height="16" rx="6" fill="#9b6b3a"/>
+            <rect x="12" y="38" width="44" height="10" rx="5" fill="#b8844a"/>
+            <ellipse cx="28" cy="41" rx="10" ry="4" fill="rgba(255,255,255,.1)" transform="rotate(-8 28 41)"/>
+            <line x1="34" y1="38" x2="34" y2="50" stroke="rgba(0,0,0,.15)" stroke-width="1"/>
+            <rect x="14" y="8" width="40" height="30" rx="6" fill="#9b6b3a"/>
+            <rect x="16" y="10" width="36" height="26" rx="5" fill="#c49660"/>
+            <ellipse cx="26" cy="16" rx="8" ry="5" fill="rgba(255,255,255,.12)" transform="rotate(-10 26 16)"/>
+            <rect x="17" y="11" width="15" height="23" rx="4" fill="rgba(255,255,255,.06)"/>
+            <rect x="35" y="11" width="15" height="23" rx="4" fill="rgba(255,255,255,.04)"/>
+            <rect x="14" y="44" width="5" height="14" rx="2" fill="#5c4020"/>
+            <rect x="49" y="44" width="5" height="14" rx="2" fill="#5c4020"/>
+            <rect x="10" y="36" width="48" height="16" rx="6" fill="none" stroke="rgba(212,175,55,.25)" stroke-width="1"/>
+            <rect x="14" y="8" width="40" height="30" rx="6" fill="none" stroke="rgba(212,175,55,.2)" stroke-width="1"/>
+            <circle cx="34" cy="63" r="2" fill="#d4af37" opacity=".5"/>
+          </svg>
+          <div class="price-type">Standard</div>
+          <div class="price-amt" id="display-price-Standard">1100<sup>DA</sup></div>
+          <div class="price-desc">Comfy pallet chair setup</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-ornament reveal"><span></span><i>✦</i><span></span></div>
+
+    <!-- BOOKING FORM -->
+    <section class="section reveal">
+      <div class="sec-head">
+        <h2 class="sec-title">📝 Book Your Seats</h2>
+        <span class="sec-sub">Fill in your details — ticket generated instantly</span>
+      </div>
+      <div class="booking-box">
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label" for="f-name">Full Name</label><input class="form-input" type="text" id="f-name" placeholder="Your full name" autocomplete="off"></div>
+          <div class="form-group"><label class="form-label" for="f-phone">Phone Number</label><input class="form-input" type="tel" id="f-phone" placeholder="0555 ···" autocomplete="off"></div>
+          <div class="form-group"><label class="form-label" for="f-seats">Number of Seats</label><select class="form-select" id="f-seats" onchange="calcTotal()"><option value="">— Select —</option></select></div>
+          <div class="form-group"><label class="form-label">Seat Type</label><div style="font-size:.8rem;color:var(--muted);padding:10px 0 4px">Select a seat above ↑</div><div style="font-size:.88rem;color:var(--gold);font-weight:600" id="selected-type-display">— Not selected —</div></div>
+          <div class="form-group form-full"><div class="total-bar"><span class="total-lbl">Total to Pay</span><span class="total-amt" id="total-preview">0 DA</span></div></div>
+        </div>
+        <button class="btn-book" onclick="submitForm()">🎫 Generate My Ticket</button>
+      </div>
+    </section>
+
+  </main>
+  <footer class="site-footer"><span id="footer-copy">© CaLMoviE · Outdoor Cinema · All Rights Reserved</span></footer>
+</div>
+
+<!-- TICKET MODAL -->
+<div class="modal" id="ticket-modal">
+  <div class="modal-inner">
+    <div id="ticket">
+      <div class="tk-header"><div class="tk-brand" id="tk-brand">CaLMoviE</div><span class="tk-sub">✦ Official Entry Pass ✦</span></div>
+      <div class="tk-code-banner"><span class="tk-code-label">Ticket Code</span><span class="tk-code-val" id="tk-code">CM-0000-AA</span></div>
+      <div class="tk-body">
+        <div class="tk-details">
+          <div class="tk-movie" id="tk-movie"></div>
+          <div class="tk-row"><span class="tk-l">Guest</span>  <span class="tk-v"      id="tk-name"></span></div>
+          <div class="tk-row"><span class="tk-l">Phone</span>  <span class="tk-v"      id="tk-phone"></span></div>
+          <div class="tk-row"><span class="tk-l">Day</span>    <span class="tk-v"      id="tk-day"></span></div>
+          <div class="tk-row"><span class="tk-l">Date</span>   <span class="tk-v"      id="tk-date"></span></div>
+          <div class="tk-row"><span class="tk-l">Time</span>   <span class="tk-v"      id="tk-time"></span></div>
+          <div class="tk-row"><span class="tk-l">Seats</span>  <span class="tk-v"      id="tk-seats"></span></div>
+          <div class="tk-row"><span class="tk-l">Type</span>   <span class="tk-v"      id="tk-type"></span></div>
+          <div class="tk-row"><span class="tk-l">Total</span>  <span class="tk-v gold" id="tk-total"></span></div>
+        </div>
+        <div class="tk-qr-wrap"><canvas id="qr-canvas" width="100" height="100"></canvas><span class="tk-scan-lbl">Scan at<br>entrance</span></div>
+      </div>
+      <div class="tk-perf"><div class="tk-notch"></div><div class="tk-dots"></div><div class="tk-notch"></div></div>
+      <div class="tk-footer"><div class="tk-id"><strong>Booking ID</strong><span id="tk-id"></span></div><span class="tk-film-ico">🎬</span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-dl" onclick="downloadTicket()">📥 Download Ticket</button>
+      <button class="btn-cls" onclick="closeModal('ticket-modal')">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+// Mount background
+var mm = document.getElementById('mountains-mount');
+if (mm) mm.innerHTML = MOUNTAINS_SVG;
+
+// Init
+(function(){
+  renderAll();
+  renderSnackGrid();
+  var obs = new IntersectionObserver(function(e){ e.forEach(function(x){ if(x.isIntersecting) x.target.classList.add('vis'); }); },{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+  document.querySelectorAll('.modal').forEach(function(m){
+    m.addEventListener('click', function(e){ if(e.target===this) closeModal(this.id); });
+  });
+})();
+</script>
+</body>
+</html>

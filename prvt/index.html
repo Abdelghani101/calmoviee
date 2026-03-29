@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CaLMoviE — Staff Access</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<style>
+/* ── PASSWORD SCREEN ── */
+.pw-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#03040e,#07091e 40%,#1a0808);display:flex;align-items:center;justify-content:center;padding:20px}
+.pw-box{background:linear-gradient(160deg,#0c0f2a,#180808);border:1px solid rgba(212,175,55,.35);border-radius:22px;padding:48px 40px;max-width:400px;width:100%;text-align:center;box-shadow:0 0 60px rgba(212,175,55,.12),0 20px 60px rgba(0,0,0,.85)}
+.pw-logo{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:var(--gold);letter-spacing:5px;margin-bottom:6px;text-shadow:0 0 20px rgba(212,175,55,.7)}
+.pw-sub{font-size:.62rem;letter-spacing:5px;color:var(--muted);text-transform:uppercase;margin-bottom:32px}
+.pw-label{font-size:.6rem;letter-spacing:3px;color:var(--blue-acc);text-transform:uppercase;font-weight:700;display:block;text-align:left;margin-bottom:8px}
+.pw-input{width:100%;background:rgba(6,8,26,.9);border:1px solid rgba(212,175,55,.25);border-radius:10px;color:var(--white);font-family:'Raleway',sans-serif;font-size:1rem;padding:14px 18px;outline:none;letter-spacing:3px;transition:border-color .3s,box-shadow .3s;text-align:center}
+.pw-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.1)}
+.pw-btn{width:100%;padding:15px;margin-top:20px;background:linear-gradient(135deg,var(--red-mid),var(--red));border:none;border-radius:12px;color:#fff;font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .3s;box-shadow:0 4px 18px rgba(176,48,32,.3)}
+.pw-btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(176,48,32,.5)}
+.pw-error{color:#e74c3c;font-size:.75rem;letter-spacing:2px;margin-top:12px;min-height:20px}
+.pw-hint{font-size:.62rem;color:var(--muted);margin-top:20px;opacity:.5}
+
+/* ── ADMIN PAGE LAYOUT ── */
+.admin-page{position:relative;z-index:1;display:none}
+.admin-top-bar{display:flex;align-items:center;justify-content:space-between;padding:var(--sp-sm) var(--sp-md);background:rgba(6,8,26,.85);border-bottom:1px solid rgba(212,175,55,.15);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10}
+.admin-top-title{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--gold);letter-spacing:4px}
+.admin-top-badge{font-size:.58rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.2);border-radius:20px;padding:4px 12px}
+.btn-logout{background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:8px;color:var(--muted);font-size:.7rem;letter-spacing:2px;padding:8px 16px;cursor:pointer;font-family:'Raleway',sans-serif;transition:all .3s}
+.btn-logout:hover{border-color:rgba(255,255,255,.4);color:#fff}
+
+/* admin sections */
+.admin-wrap{max-width:780px;margin:0 auto;padding:var(--sp-lg) var(--sp-md)}
+.admin-card{background:linear-gradient(160deg,rgba(12,15,42,.95),rgba(24,8,8,.85));border:1px solid rgba(212,175,55,.18);border-radius:var(--r-lg);padding:var(--sp-md) var(--sp-lg);margin-bottom:var(--sp-md)}
+.admin-card-title{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:.85;margin-bottom:var(--sp-sm);padding-bottom:8px;border-bottom:1px solid rgba(212,175,55,.1);display:flex;align-items:center;gap:8px}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-sm)}
+.admin-grid.col1{grid-template-columns:1fr}
+.admin-group{display:flex;flex-direction:column;gap:6px}
+.admin-label{font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue-acc);font-weight:700}
+.admin-input{background:rgba(6,8,26,.9);border:1px solid rgba(212,175,55,.2);border-radius:8px;color:var(--white);font-family:'Raleway',sans-serif;font-size:.86rem;padding:10px 13px;outline:none;transition:border-color .3s,box-shadow .3s;width:100%}
+.admin-input:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(212,175,55,.1)}
+.admin-input::placeholder{color:var(--muted)}
+.admin-note{font-size:.65rem;color:var(--muted);margin-top:4px;font-style:italic}
+.price-locked{display:flex;align-items:center;gap:10px;background:rgba(212,175,55,.05);border:1px solid rgba(212,175,55,.15);border-radius:8px;padding:12px 16px}
+.price-locked-val{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold);font-weight:700}
+.price-locked-lbl{font-size:.6rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.price-lock-icon{margin-left:auto;font-size:1rem;opacity:.5}
+.snack-row{display:grid;grid-template-columns:2fr 2fr 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.snack-row-header{display:grid;grid-template-columns:2fr 2fr 1fr;gap:8px;margin-bottom:4px}
+.snack-row-header span{font-size:.55rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.btn-remove-snack{background:rgba(176,48,32,.2);border:1px solid rgba(176,48,32,.3);border-radius:6px;color:var(--red-mid);font-size:.8rem;cursor:pointer;padding:8px;transition:all .2s;width:100%}
+.btn-remove-snack:hover{background:rgba(176,48,32,.4);color:#fff}
+.btn-add-snack{width:100%;padding:10px;background:rgba(77,142,201,.1);border:1px dashed rgba(77,142,201,.3);border-radius:8px;color:var(--blue-acc);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:2px;cursor:pointer;margin-top:8px;transition:all .3s}
+.btn-add-snack:hover{background:rgba(77,142,201,.2);border-color:var(--blue-acc)}
+.btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--red-mid),var(--red));border:none;border-radius:10px;color:#fff;font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .3s;box-shadow:0 4px 16px rgba(176,48,32,.25);margin-top:var(--sp-sm)}
+.btn-save:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(176,48,32,.45)}
+.btn-scan-panel{width:100%;padding:14px;background:linear-gradient(135deg,#1a6090,#0d3a5a);border:none;border-radius:10px;color:#fff;font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .3s;box-shadow:0 4px 16px rgba(26,96,144,.25)}
+.btn-scan-panel:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,96,144,.45)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,rgba(212,175,55,.9),rgba(184,150,10,.9));color:#0a0e2a;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;padding:12px 28px;border-radius:30px;z-index:9999;opacity:0;transition:opacity .4s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.live-preview-label{font-size:.6rem;letter-spacing:3px;color:var(--blue-acc);text-transform:uppercase;margin-bottom:6px;display:block}
+
+/* Scanner modal in admin context */
+#scanner-modal{z-index:1000}
+
+@media(max-width:600px){
+  .admin-grid{grid-template-columns:1fr}
+  .admin-wrap{padding:var(--sp-md) var(--sp-sm)}
+  .admin-card{padding:var(--sp-sm) var(--sp-md)}
+  .snack-row{grid-template-columns:1fr 1fr 40px}
+  .admin-top-bar{flex-wrap:wrap;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg-scene">
+  <div class="moon"></div>
+  <div id="mountains-mount"></div>
+</div>
+
+<!-- ═══ PASSWORD SCREEN ═══ -->
+<div class="pw-screen" id="pw-screen">
+  <div class="pw-box">
+    <div class="pw-logo">CaLMoviE</div>
+    <div class="pw-sub">Staff Access Only</div>
+    <label class="pw-label" for="pw-input">Enter Password</label>
+    <input class="pw-input" type="password" id="pw-input" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter') checkPassword()">
+    <button class="pw-btn" onclick="checkPassword()">🔐 Enter Admin</button>
+    <div class="pw-error" id="pw-error"></div>
+    <div class="pw-hint">Authorized personnel only</div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PAGE ═══ -->
+<div class="admin-page" id="admin-page">
+
+  <div class="admin-top-bar">
+    <div class="admin-top-title">⚙️ Admin</div>
+    <span class="admin-top-badge">🔒 Secure Session</span>
+    <button class="btn-logout" onclick="logout()">✕ Logout</button>
+  </div>
+
+  <div class="admin-wrap">
+
+    <!-- SITE IDENTITY -->
+    <div class="admin-card">
+      <div class="admin-card-title">🏷️ Site Identity</div>
+      <div class="admin-grid">
+        <div class="admin-group"><label class="admin-label">Site Name</label><input class="admin-input" id="a-sitename" value="CaLMoviE"></div>
+        <div class="admin-group"><label class="admin-label">Tagline</label><input class="admin-input" id="a-tagline" value="Outdoor Cinema Experience"></div>
+      </div>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="admin-card">
+      <div class="admin-card-title">📅 Day 1 — Monday</div>
+      <div class="admin-grid">
+        <div class="admin-group"><label class="admin-label">Day Label</label><input class="admin-input" id="a-d0-name" value="Monday"></div>
+        <div class="admin-group"><label class="admin-label">Short Date</label><input class="admin-input" id="a-d0-date" value="April 7 · 2026"></div>
+        <div class="admin-group"><label class="admin-label">Movie Name</label><input class="admin-input" id="a-d0-movie" value="Interstellar"></div>
+        <div class="admin-group"><label class="admin-label">Showtime</label><input class="admin-input" id="a-d0-time" value="21:00"></div>
+        <div class="admin-group"><label class="admin-label">Total Seats</label><input class="admin-input" type="number" id="a-d0-seats" value="60" min="1"></div>
+        <div class="admin-group"><label class="admin-label">Venue</label><input class="admin-input" id="a-d0-venue" value="Open Sky · Outdoor Stage"></div>
+      </div>
+      <div class="admin-grid col1" style="margin-top:10px">
+        <div class="admin-group"><label class="admin-label">Poster URL</label><input class="admin-input" id="a-d0-poster" value="https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg"><span class="admin-note">Paste any direct image URL (.jpg / .png)</span></div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="admin-card">
+      <div class="admin-card-title">📅 Day 2 — Tuesday</div>
+      <div class="admin-grid">
+        <div class="admin-group"><label class="admin-label">Day Label</label><input class="admin-input" id="a-d1-name" value="Tuesday"></div>
+        <div class="admin-group"><label class="admin-label">Short Date</label><input class="admin-input" id="a-d1-date" value="April 8 · 2026"></div>
+        <div class="admin-group"><label class="admin-label">Movie Name</label><input class="admin-input" id="a-d1-movie" value="Dune: Part Two"></div>
+        <div class="admin-group"><label class="admin-label">Showtime</label><input class="admin-input" id="a-d1-time" value="21:00"></div>
+        <div class="admin-group"><label class="admin-label">Total Seats</label><input class="admin-input" type="number" id="a-d1-seats" value="60" min="1"></div>
+        <div class="admin-group"><label class="admin-label">Venue</label><input class="admin-input" id="a-d1-venue" value="Open Sky · Outdoor Stage"></div>
+      </div>
+      <div class="admin-grid col1" style="margin-top:10px">
+        <div class="admin-group"><label class="admin-label">Poster URL</label><input class="admin-input" id="a-d1-poster" value="https://upload.wikimedia.org/wikipedia/en/b/bc/Dune_Part_Two_film_poster.jpg"><span class="admin-note">Paste any direct image URL (.jpg / .png)</span></div>
+      </div>
+    </div>
+
+    <!-- BOOKING SETTINGS -->
+    <div class="admin-card">
+      <div class="admin-card-title">🎟️ Booking Settings</div>
+      <div class="admin-grid">
+        <div class="admin-group"><label class="admin-label">Max Seats per Booking</label><input class="admin-input" type="number" id="a-maxbook" value="6" min="1" max="20"></div>
+      </div>
+    </div>
+
+    <!-- PRICES LOCKED -->
+    <div class="admin-card">
+      <div class="admin-card-title">💰 Ticket Prices (Fixed)</div>
+      <p style="font-size:.72rem;color:var(--muted);margin-bottom:var(--sp-sm)">Prices are locked. To change them, edit <code style="color:var(--gold);background:rgba(212,175,55,.08);padding:2px 6px;border-radius:4px">js/config.js</code> directly.</p>
+      <div class="admin-grid">
+        <div class="price-locked"><div><div class="price-locked-lbl">🛋️ Pouf</div><div class="price-locked-val">1 500 DA</div></div><span class="price-lock-icon">🔒</span></div>
+        <div class="price-locked"><div><div class="price-locked-lbl">🪑 Standard</div><div class="price-locked-val">1 100 DA</div></div><span class="price-lock-icon">🔒</span></div>
+      </div>
+    </div>
+
+    <!-- SNACK MENU -->
+    <div class="admin-card">
+      <div class="admin-card-title">🍿 Snack Menu</div>
+      <div class="snack-row-header"><span>Item (emoji + name)</span><span>Price (DA)</span><span>Del</span></div>
+      <div id="admin-snack-rows"></div>
+      <button class="btn-add-snack" onclick="addSnackRow()">+ Add Item</button>
+    </div>
+
+    <!-- SCANNER -->
+    <div class="admin-card">
+      <div class="admin-card-title">📷 QR Ticket Scanner</div>
+      <p style="font-size:.76rem;color:var(--muted);margin-bottom:var(--sp-sm)">Scan guest tickets at the entrance. Works with device camera or manual code entry.</p>
+      <button class="btn-scan-panel" onclick="openScanner()">📷 Open QR Scanner</button>
+    </div>
+
+    <button class="btn-save" onclick="saveAdmin()">✅ Save All Changes</button>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Changes saved!</div>
+
+<!-- SCANNER MODAL -->
+<div class="modal" id="scanner-modal">
+  <div class="modal-inner" style="max-width:500px">
+    <div class="scanner-panel" style="width:100%">
+      <div class="scanner-header">
+        <div class="scanner-title">📷 QR Ticket Scanner</div>
+        <button class="admin-close" style="background:transparent;border:1px solid rgba(255,255,255,.14);border-radius:8px;color:var(--muted);width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="stopScanner();closeModal('scanner-modal')">✕</button>
+      </div>
+      <div class="scanner-body">
+        <div class="scanner-video-wrap"><video id="scanner-video" autoplay muted playsinline></video><div class="scanner-overlay"><div class="scanner-frame"><div class="scan-line"></div></div></div></div>
+        <div class="scanner-status" id="scanner-status">Press Start to activate camera</div>
+        <div class="scanner-result" id="scanner-result"><div class="scanner-result-title">✅ Ticket Verified</div><div class="scanner-result-data" id="scanner-data"></div></div>
+        <div class="scanner-btns"><button class="btn-scan-start" onclick="startScanner()">▶ Start Camera</button><button class="btn-scan-stop" onclick="stopScanner()">■ Stop</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script>
+/* ── ADMIN PASSWORD ──────────────────────────────────
+   ⚠️  CHANGE THIS PASSWORD before deploying!
+   ──────────────────────────────────────────────────── */
+var ADMIN_PASSWORD = 'cinema2026';   /* ← CHANGE THIS */
+
+function checkPassword() {
+  var inp = document.getElementById('pw-input');
+  var err = document.getElementById('pw-error');
+  if (inp.value === ADMIN_PASSWORD) {
+    document.getElementById('pw-screen').style.display = 'none';
+    document.getElementById('admin-page').style.display = 'block';
+    initAdmin();
+  } else {
+    err.textContent = '⚠️ Incorrect password. Try again.';
+    inp.value = '';
+    inp.focus();
+    setTimeout(function(){ err.textContent = ''; }, 3000);
+  }
+}
+
+function logout() {
+  document.getElementById('pw-screen').style.display = 'flex';
+  document.getElementById('admin-page').style.display = 'none';
+  document.getElementById('pw-input').value = '';
+}
+
+/* ── ADMIN INIT ────────────────────────────────────── */
+function initAdmin() {
+  var mm = document.getElementById('mountains-mount');
+  if (mm) mm.innerHTML = MOUNTAINS_SVG;
+  populateFields();
+  renderAdminSnacks();
+  document.querySelectorAll('.modal').forEach(function(m){
+    m.addEventListener('click', function(e){ if(e.target===this){ stopScanner(); closeModal(this.id); } });
+  });
+}
+
+function populateFields() {
+  var s=CFG.site, d0=CFG.days[0], d1=CFG.days[1];
+  setVal('a-sitename', s.name); setVal('a-tagline', s.tagline);
+  setVal('a-d0-name',  d0.name);  setVal('a-d0-date',  d0.date);
+  setVal('a-d0-movie', d0.movie); setVal('a-d0-time',  d0.time);
+  setVal('a-d0-seats', d0.total); setVal('a-d0-venue', d0.venue);
+  setVal('a-d0-poster',d0.poster);
+  setVal('a-d1-name',  d1.name);  setVal('a-d1-date',  d1.date);
+  setVal('a-d1-movie', d1.movie); setVal('a-d1-time',  d1.time);
+  setVal('a-d1-seats', d1.total); setVal('a-d1-venue', d1.venue);
+  setVal('a-d1-poster',d1.poster);
+  setVal('a-maxbook',  CFG.seats.maxPerBooking);
+}
+
+/* ── SNACK ROWS ────────────────────────────────────── */
+function renderAdminSnacks() {
+  var cont = $id('admin-snack-rows');
+  if (!cont) return;
+  cont.innerHTML = '';
+  CFG.snacks.forEach(function(s, i) {
+    cont.innerHTML += '<div class="snack-row" id="snack-row-'+i+'">' +
+      '<input class="admin-input" placeholder="🍕 Name" value="'+s.emoji+' '+s.name+'" id="snack-nm-'+i+'">' +
+      '<input class="admin-input" type="number" placeholder="Price" value="'+s.price+'" id="snack-pr-'+i+'" min="0">' +
+      '<button class="btn-remove-snack" onclick="removeSnack('+i+')">✕</button>' +
+      '</div>';
+  });
+}
+
+function addSnackRow() { CFG.snacks.push({emoji:'🆕',name:'New Item',price:0}); renderAdminSnacks(); }
+function removeSnack(i){ CFG.snacks.splice(i,1); renderAdminSnacks(); }
+
+/* ── SAVE ──────────────────────────────────────────── */
+function saveAdmin() {
+  CFG.site.name    = getVal('a-sitename') || 'CaLMoviE';
+  CFG.site.tagline = getVal('a-tagline');
+  [0,1].forEach(function(i){
+    var p='a-d'+i+'-';
+    CFG.days[i].name   = getVal(p+'name');
+    CFG.days[i].date   = getVal(p+'date');
+    CFG.days[i].movie  = getVal(p+'movie');
+    CFG.days[i].time   = getVal(p+'time');
+    CFG.days[i].venue  = getVal(p+'venue');
+    CFG.days[i].poster = getVal(p+'poster');
+    var t=parseInt(getVal(p+'seats'))||60; CFG.days[i].total=t;
+  });
+  CFG.seats.maxPerBooking = parseInt(getVal('a-maxbook'))||6;
+  // Read snacks
+  var rows = document.querySelectorAll('#admin-snack-rows .snack-row');
+  CFG.snacks = [];
+  rows.forEach(function(row,i){
+    var raw=getVal('snack-nm-'+i), price=parseInt(getVal('snack-pr-'+i))||0;
+    var m=raw.match(/^(\S+)\s+(.*)/);
+    CFG.snacks.push({emoji:m?m[1]:'🍽️', name:m?m[2]:raw, price:price});
+  });
+  // Prices stay FIXED — never overwrite
+  showToast('✅ Changes saved!');
+}
+
+function showToast(msg) {
+  var t = $id('toast'); if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+</script>
+</body>
+</html>
